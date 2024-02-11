@@ -17,6 +17,9 @@ variables:
 steps:
 
 - script: |
+    echo 'Pipeline.Workspace=$(Pipeline.Workspace)'
+    echo 'Build.ArtifactStagingDirectory=$(Build.ArtifactStagingDirectory)'
+    echo 'Build.StagingDirectory=$(Build.StagingDirectory)'
     echo 'Build.DefinitionName=$(Build.DefinitionName)'
     echo 'Build.BuildId=$(Build.BuildId)'
     echo 'Build.BuildNumber=$(Build.BuildNumber)'
@@ -46,6 +49,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
+    #  D:\a\1\s\bin\Release\TestAzureDevOpsConsoleApp.exe
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
