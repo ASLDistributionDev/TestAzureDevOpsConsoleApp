@@ -50,6 +50,11 @@ steps:
     CleanTargetFolder: true
     OverWrite: true
 
+
+- script: ren *.exe *$(Build.BuildNumber).exe
+  workingDirectory: $(Build.ArtifactStagingDirectory)
+  displayName: Rename Artifact
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
