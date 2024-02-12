@@ -51,7 +51,7 @@ steps:
     OverWrite: true
 
 
-- script: ren *.exe *$(Build.BuildNumber).exe
+- script: ren *.exe TestAzureDevOpsConsoleApp_$(Build.BuildNumber).exe
   workingDirectory: $(Build.ArtifactStagingDirectory)
   displayName: Rename Artifact
 
