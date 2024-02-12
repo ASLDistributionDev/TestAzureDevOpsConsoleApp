@@ -55,6 +55,11 @@ steps:
   workingDirectory: $(Build.ArtifactStagingDirectory)
   displayName: Rename Artifact
 
+- script: dir
+  workingDirectory: $(Build.ArtifactStagingDirectory)
+  displayName: List Artifact Dir
+
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
