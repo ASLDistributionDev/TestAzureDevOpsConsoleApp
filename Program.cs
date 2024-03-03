@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TestAzureDevOpsConsoleApp
 {
@@ -14,8 +15,23 @@ namespace TestAzureDevOpsConsoleApp
             Console.WriteLine("TestAzureDevOpsConsoleApp is running...");
             string path = ".";
             int fCount = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-            
-            for(; ; )
+
+            string movieJSON = @"{
+                              'Name': 'Bad Boys',
+                              'Genres': [
+                                'Action',
+                                'Comedy'
+                              ]
+                            }";
+
+            Movie m = JsonConvert.DeserializeObject<Movie>(movieJSON);
+
+            string name = m.Name;
+
+            Console.WriteLine("JSON = " + m.Name);
+
+
+            for (; ; )
             {
                 fCount = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
                 Console.WriteLine("# of files here: " + fCount);
