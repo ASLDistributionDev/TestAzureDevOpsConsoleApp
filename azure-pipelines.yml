@@ -11,7 +11,7 @@ trigger:
 
 pool: 
   # vmImage: 'windows-latest' 
-  # name: SelfHostedPool
+  name: SelfHostedPool
   demands:
     - Agent.Name -equals WICIBuildVM  
 
