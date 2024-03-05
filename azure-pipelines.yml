@@ -17,7 +17,7 @@ pool:
   name: SelfHostedPool
   #vmImage: 'windows-latest' 
   demands:
-    - Agent.Name -equals WICIBuildVM      
+    - Agent.Name -equals TIGER      
 
 
 jobs:
