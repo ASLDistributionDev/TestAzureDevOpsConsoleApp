@@ -9,8 +9,11 @@ trigger:
       - master
 
 
-pool:
-  vmImage: 'windows-latest'
+pool: 
+  # vmImage: 'windows-latest' 
+  # name: SelfHostedPool
+  demands:
+    - Agent.Name -equals WICIBuildVM  
 
 variables:
   solution: '**/*.sln'
