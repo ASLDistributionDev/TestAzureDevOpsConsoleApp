@@ -7,6 +7,7 @@ trigger:
   branches:
     include:
       - master
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
@@ -18,9 +19,10 @@ jobs:
   - job: BuildConsoleApp
 
     pool: 
-      name: SelfHostedPool
-      demands:
-        - Agent.Name -equals WICIBuildVM  
+      #name: SelfHostedPool
+      vmImage: 'windows-latest' 
+      #demands:
+      #  - Agent.Name -equals WICIBuildVM  
 
     steps:
 
