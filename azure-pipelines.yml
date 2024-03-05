@@ -13,16 +13,16 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+pool: 
+  name: SelfHostedPool
+  # vmImage: 'windows-latest' 
+  demands:
+    - Agent.Name -equals WICIBuildVM  
+
 
 jobs:
 
   - job: BuildConsoleApp
-
-    pool: 
-      #name: SelfHostedPool
-      vmImage: 'windows-latest' 
-      #demands:
-      #  - Agent.Name -equals WICIBuildVM  
 
     steps:
 
