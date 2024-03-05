@@ -7,70 +7,72 @@ trigger:
   branches:
     include:
       - master
-
-
-pool: 
-  # vmImage: 'windows-latest' 
-  name: SelfHostedPool
-  demands:
-    - Agent.Name -equals WICIBuildVM  
-
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
 
-- script: |
-    echo 'Pipeline.Workspace=$(Pipeline.Workspace)'
-    echo 'Build.ArtifactStagingDirectory=$(Build.ArtifactStagingDirectory)'
-    echo 'Build.StagingDirectory=$(Build.StagingDirectory)'
-    echo 'Pipeline.Workspace=$(Pipeline.Workspace)'
-    echo 'Build.BinariesDirectory=$(Build.BinariesDirectory)'
-    echo 'Build.SourcesDirectory=$(Build.SourcesDirectory)'
-    echo 'Build.BinariesDirectory=$(Build.BinariesDirectory)'
-    echo 'Agent.BuildDirectory=$(Agent.BuildDirectory)'
-  displayName: 'Show Env'
+jobs:
 
-- task: NuGetToolInstaller@1
+  - job: BuildConsoleApp
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+    pool: 
+      name: SelfHostedPool
+      demands:
+        - Agent.Name -equals WICIBuildVM  
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    steps:
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\bin\Release'
-    Contents: '**\*.exe'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    CleanTargetFolder: true
-    OverWrite: true
+    - script: |
+        echo 'Pipeline.Workspace=$(Pipeline.Workspace)'
+        echo 'Build.ArtifactStagingDirectory=$(Build.ArtifactStagingDirectory)'
+        echo 'Build.StagingDirectory=$(Build.StagingDirectory)'
+        echo 'Pipeline.Workspace=$(Pipeline.Workspace)'
+        echo 'Build.BinariesDirectory=$(Build.BinariesDirectory)'
+        echo 'Build.SourcesDirectory=$(Build.SourcesDirectory)'
+        echo 'Build.BinariesDirectory=$(Build.BinariesDirectory)'
+        echo 'Agent.BuildDirectory=$(Agent.BuildDirectory)'
+      displayName: 'Show Env'
 
-- script: ren *.exe TestAzureDevOpsConsoleApp_$(Build.BuildNumber).exe
-  workingDirectory: $(Build.ArtifactStagingDirectory)
-  displayName: Rename Artifact
+    - task: NuGetToolInstaller@1
 
-- script: dir
-  workingDirectory: $(Build.ArtifactStagingDirectory)
-  displayName: List Artifact Dir
+    - task: NuGetCommand@2
+      inputs:
+        restoreSolution: '$(solution)'
+
+    - task: VSBuild@1
+      inputs:
+        solution: '$(solution)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)\bin\Release'
+        Contents: '**\*.exe'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+        OverWrite: true
+
+    - script: ren *.exe TestAzureDevOpsConsoleApp_$(Build.BuildNumber).exe
+      workingDirectory: $(Build.ArtifactStagingDirectory)
+      displayName: Rename Artifact
+
+    - script: dir
+      workingDirectory: $(Build.ArtifactStagingDirectory)
+      displayName: List Artifact Dir
 
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: VSTest@2
+      inputs:
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    # D:\a\1\s\bin\Release\TestAzureDevOpsConsoleApp.exe
-    # 
-    #PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        # D:\a\1\s\bin\Release\TestAzureDevOpsConsoleApp.exe
+        # 
+        #PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
