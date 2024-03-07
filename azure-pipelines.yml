@@ -54,7 +54,7 @@ jobs:
 
     - task: CopyFiles@2
       inputs:
-        SourceFolder: '$(Build.SourcesDirectory)\bin\Release'
+        SourceFolder: '$(Build.SourcesDirectory)\bin\$(buildConfig)'
         Contents: '**\*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
