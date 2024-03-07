@@ -35,6 +35,8 @@ jobs:
         echo 'Build.SourcesDirectory=$(Build.SourcesDirectory)'
         echo 'Build.BinariesDirectory=$(Build.BinariesDirectory)'
         echo 'Agent.BuildDirectory=$(Agent.BuildDirectory)'
+        echo 'buildConfiguration=$(buildConfiguration)'
+        echo 'buildConfig=$(buildConfig)'
       displayName: 'Show Env'
 
     - task: NuGetToolInstaller@1
