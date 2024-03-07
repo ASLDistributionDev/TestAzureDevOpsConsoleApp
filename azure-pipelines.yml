@@ -60,7 +60,7 @@ jobs:
         CleanTargetFolder: true
         OverWrite: true
 
-    - script: echo $(Build.BuildNumber) > TestAzureDevOpsConsoleApp_$(buildConfiguration).$(Build.BuildNumber).buildnumber.txt
+    - script: echo $(Build.BuildNumber) > TestAzureDevOpsConsoleApp_$(buildConfig).$(Build.BuildNumber).buildnumber.txt
       workingDirectory: $(Build.ArtifactStagingDirectory)
       displayName: Add Version File
 
