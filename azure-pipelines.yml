@@ -57,9 +57,13 @@ jobs:
         CleanTargetFolder: true
         OverWrite: true
 
-    - script: ren *.exe TestAzureDevOpsConsoleApp_$(Build.BuildNumber).exe
+    - script: echo $(Build.BuildNumber) > $(Build.BuildNumber).buildnumber.txt
       workingDirectory: $(Build.ArtifactStagingDirectory)
-      displayName: Rename Artifact
+      displayName: Add Version File
+
+    #- script: ren *.exe TestAzureDevOpsConsoleApp_$(Build.BuildNumber).exe
+    #  workingDirectory: $(Build.ArtifactStagingDirectory)
+    #  displayName: Rename Artifact
 
     - script: dir
       workingDirectory: $(Build.ArtifactStagingDirectory)
